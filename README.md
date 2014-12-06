@@ -81,35 +81,42 @@ Output from the checker is passed to both stdout and stderr. General messages an
 #### Everything to the Screen
 
 Windows:
-
+```
 tnsnames_checker tnsnames.ora
+```
 
 Linux/Unix:
 
+```
 ./tnsnames_checker.sh tnsnames.ora
-
+```
 
 #### Everyting to a single file
 
 Windows:
 
+```
 tnsnames_checker tnsnames.ora >tnsnames.log 2>&1
+```
 
 Linux/Unix:
-
+```
 ./tnsnames_checker.sh tnsnames.ora >tnsnames.log 2>&1
+```
 
 
 #### Split over Two Files
 
 Windows:
-
+```
 tnsnames_checker tnsnames.ora >tnsnames.log 2>tnsnames.errors.log
+```
 
 Linux/Unix:
-
+```
 ./tnsnames_checker.sh tnsnames.ora >tnsnames.log 2>tnsnames.errors.log
+```
 
 
 
-[antlr]: www.antlr.org
+[antlr]: http://www.antlr.org
