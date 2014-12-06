@@ -1,0 +1,293 @@
+#--------------------------------------------------------------------
+# This tnsnames.ora file tests the parser through every code path. 
+# This is probably the worst tnsnames.ora file you will ever see in 
+# your life!
+#
+# Norman Dunbar.
+#--------------------------------------------------------------------
+
+#--------------------------------------------------------------------
+# This one is a correctly defined listener entry.
+#--------------------------------------------------------------------
+LSNR_FRED =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = tcp)(HOST = bedrock)(PORT = 1524))
+  )
+
+
+#--------------------------------------------------------------------
+# This one is a correctly defined listener entry with hex port quads.
+#--------------------------------------------------------------------
+LSNR_HEXFRED =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = tcp)(HOST = 0x0a.0x1.0x2.0xFa)(PORT = 1524))
+  )
+
+
+#--------------------------------------------------------------------
+# This one is a correctly defined listener entry with oct port quads.
+#--------------------------------------------------------------------
+LSNR_OCTFRED =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = tcp)(HOST = 012.01.02.027)(PORT = 1524))
+  )
+
+
+#--------------------------------------------------------------------
+# This one is a correctly defined listener entry with mixed quads.
+#--------------------------------------------------------------------
+LSNR_MIXFRED =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = tcp)(HOST = 10.0x1.02.0X27)(PORT = 1524))
+  )
+
+
+#--------------------------------------------------------------------
+# This one is a mess.
+#--------------------------------------------------------------------
+LSNR_MESSFRED =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = tcp)(HOST = 10.0xFe0.029.0X27)(PORT = 1524))
+  )
+
+
+#--------------------------------------------------------------------
+# This one is a duplicate and a mess.
+#--------------------------------------------------------------------
+LSNR_MESSFRED =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = tcp)(HOST = 10.0xFe0.029.0X27)(PORT = 1524))
+  )
+
+
+#--------------------------------------------------------------------
+# This one is correctly defined - with redefinitions in the IPC stuff.
+#--------------------------------------------------------------------
+LSNR_WILMA =
+  (ADDRESS = (PROTOCOL = IPC)(KEY = LISTENER)(PROTOCOL = IPC)(KEY = LSNR_WILMA))
+  
+
+#--------------------------------------------------------------------
+# This one is a correctly defined listener entry, with multiple 
+# addresses, wrapped in an address_list.
+#--------------------------------------------------------------------
+lsnr_barney =
+  (description =
+    (address_list = 
+        (address = (protocol = tcp)(host = bedrock)(port = 1524))
+        (address = (protocol = tcp)(host = rubble)(port = 1524))
+    )
+  )
+
+
+#--------------------------------------------------------------------
+# This one has  multiple addresses but no address_list.
+#--------------------------------------------------------------------
+lsnr_betty =
+  (description =
+        (address = (protocol = tcp)(host = bedrock)(port = 1524))
+        (address = (protocol = tcp)(host = rubble)(port = 1524))
+  )
+
+
+#--------------------------------------------------------------------
+# There's not much can go wrong here!
+#--------------------------------------------------------------------
+IFILE = "/this/is/an/ifile/entry/tnsnames.ora"  
+
+
+#--------------------------------------------------------------------
+# This is the love child of any tnsnames.ora entry. It is beyond
+# understanding just how badly defined this entry is!
+# Oh, it is also a alias list too!
+#--------------------------------------------------------------------
+alias_1,alias_2.world,alias3.dunbar-it.co.uk =
+    (description_list =
+       (load_balance = no)
+       (load_balance = yes)
+       (description =
+            (send_buf_size = 16384)
+            (load_balance = yes)
+            (connect_timeout = 10)
+            (recv_buf_size = 16384)
+            (address_list =
+                (load_balance = no)
+                (address = (protocol = tcp)(host = abcde32-vip)(port = 1522))
+                (address = (protocol = tcp)(host = lowport.dunbar-it.co.uk)(port = 80))
+                (address = (protocol = tcp)(host = 0.2.3.400)(port = 8080))
+                (address = (protocol = tcp)(host = 1.2.3.4)(port = 8080))
+                (address = 
+                    (protocol = TCP)
+                    (host = 1.2.3.4)
+                    (protocol=tcp)
+                    (port = 1234) 
+                    (port = 8080)
+                    (host = test-server.me.co.uk)
+                )
+                (address = (protocol = tcp)(host = highport.dunbar-it.co.uk)(port = 65536))
+                (address = (protocol = spx)(service = spx_service_name))
+                (address = 
+                    (protocol = spx)
+                    (service = spx_service_name)
+                    (protocol = spx)
+                    (service = spx_service_name_again)
+                )
+                (address = (protocol = nmp)
+                           (server = server_name)
+                           (pipe = pipe_name)
+                           (send_buf_size=16384)
+                           (recv_buf_size=8192)
+                           (send_buf_size=8192)
+                           (recv_buf_size=16384)
+                )
+                (address = (protocol = beq)
+                    (program = oracle_exe)
+                    (argv0 = sid_identifier)
+                    (protocol = beq)
+                    (args = '(description=(local = yes)(address = (protocol = beq)))') 
+                )
+                (address = (protocol = beq)
+                    (program = oracle_exe)
+                    (argv0 = sid_identifier)
+                    (args = '(description=(local = yes)(address = (protocol = beq)))') 
+                    (argv0 = sid_identifier)
+                    (program = oracle_exe)
+                    (args = '(description=(local = yes)(address = (protocol = beq)))') 
+                )
+                (address = (protocol = beq)
+                    (program = oracle_exe)
+                    (argv0 = ORCL12C)
+                    (argv0 = ORCL12C)
+                    (args = '(description=(local = yes)(address = (protocol = beq))(local = no)(address = (protocol = beq)))') 
+                )
+                (address = (protocol = nmp)
+                           (server = server_name)
+                           (pipe = pipe_name)
+                           (pipe = pipe_name)
+                           (server = server_name)
+                           (protocol = nmp)
+                )
+                (load_balance = no)
+            )
+            (sdu = 256)
+            (sdu = 512)
+            (sdu = 12345)  # Valid. 
+            (sdu = 8192)   # Valid & default too.
+            (sdu = 65535)  # Valid.
+            (sdu = 65536)
+            (retry_count = 3)
+            (connect_data =
+              (sid = sid_x)(sid = sid_y)(sid = sid_sid)
+              (server = dedicated)
+              (service_name = ded_server)
+              (server = shared)
+              (global_name = my_global_name)
+              (hs  = OK)
+              (instance_name = my_name)
+              (UR = A)
+              (hs  = OK)
+              (UR = A)
+              (service_name = ded_server)
+              (service_name = ded_server)
+            )
+            (retry_count = 6)
+            (security = (ssl_server_cert_dn = "cn=finance,cn=oracle,dc=uk,dc=co"))
+            (transport_connect_timeout = 5)
+            (sdu = 65536)
+            (send_buf_size = 8192)
+            (recv_buf_size = 8192)
+        )
+       (description = 
+            (address = (protocol = tcp)(host = abcde32-vip)(port = 1522))
+            (address = (protocol = tcp)(host = 10.0.254.255)(port = 1666))
+            (address = (protocol = tcp)(host = 10.33.254.251)(port = 6666))
+            (address = (protocol = tcp)(host = hubble.dunbar-it.co.uk)(port = 1522))
+            # No CONNECT_DATA, should barf!
+            (sdu = 8193)
+       ) # This will cause a lexer error as it's looking for connect data missing above..
+    )
+
+
+#--------------------------------------------------------------------
+# Sanity returns, this one is valid.
+#--------------------------------------------------------------------
+barney =
+    (description =
+        (address = (protocol = tcp)(host = srvr_barney.world.co.uk)(port = 1522))
+        (connect_data =
+          (server = shared)
+          (service_name = shared_server)
+        )
+    )
+
+
+#--------------------------------------------------------------------
+# Sanity returns, this one is valid, but a duplicate.
+#--------------------------------------------------------------------
+alias3.dunbar-it.co.uk =
+    (description =
+        (address = (protocol = tcp)(host = srvr_barney.world.co.uk)(port = 1522))
+        (connect_data =
+          (server = shared)
+          (service_name = shared_server)
+        )
+    )
+
+
+#--------------------------------------------------------------------
+# Another valid entry, with failover_mode entries.
+#--------------------------------------------------------------------
+pebbles =
+    (description =
+        (address = (protocol = tcp)(host = srvr_barney.world.co.uk)(port = 1522))
+        (connect_data =
+          (server = shared)
+          (service_name = shared_server)
+          (failover_mode =
+                (backup = bedrock)
+                (type = session)
+                (method = basic)
+                (retries = 10)
+                (delay = 20)
+          )
+        )
+    )
+
+
+#--------------------------------------------------------------------
+# Lots of redefinitions etc here in the failover stuff.
+#--------------------------------------------------------------------
+pebbles_two =
+    (description =
+        (address = (protocol = tcp)(host = srvr_barney.world.co.uk)(port = 1522))
+        (connect_data =
+          (failover_mode =
+                (backup = bedrock)
+                (type = session)
+                (method = basic)
+                (retries = 10)
+                (delay = 20)
+          )
+          (server = shared)
+          (service_name = shared_server)
+          (failover_mode =           # Redefinition
+                (method = preconnect)
+                (backup = bedrock)
+                (delay = 22)
+                (type = session)
+                (type = select)      # Redefinition 
+                (method = basic)     # Redefinition
+                (retries = 10)
+                (backup = bedrock)   # Redefinition
+                (delay = 2)          # Redefinition
+                (retries = 1)        # Redefinition
+                (type = none)        # Redefinition
+          )
+        )
+    )
+
+
+#--------------------------------------------------------------------
+# The following line will cause a lexer error, it's incomplete.
+#--------------------------------------------------------------------
+rmancatalog = ()
