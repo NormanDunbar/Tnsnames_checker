@@ -27,7 +27,7 @@ The checks carried out are:
 ### Windows Only Files
 
   - antlr4.bat - A batch file to compile a *.g4 file into various Java classes, lexers and parsers.
-  - grun.bat - A file to test run parser rules. Read the ANTLR4 docs for details on the [antlr] website. You might need to use this in debugging your grammar.
+  - grun.bat - A file to test run parser rules. Read the ANTLR4 docs for details on the [ANTLR][antlr] website. You might need to use this in debugging your grammar.
   - build.bat - A batch file to compile the grammar, compile the Java files, build a jarfile (in the test subdirectory) and clean up after itself. 
   - antlr_shell.cmd - A batch file to set the Java and ALTLR4 environment. Run this first, before you try to do anything. You will need to edit the various folder names to match your system before doing anything though!
   - test\tnsnames_checker.cmd - a batch file to run the generated checker application.
@@ -51,7 +51,7 @@ The checks carried out are:
 
 ### Dependencies
   - Java 1.6 (aka Java 6) minimum. Has been built and tested with Java 6 and Java 7.
-  - antlr-4.4-complete.jar - downloaded from the [antlr](ANTLR4) Web site. There may be a later version.
+  - antlr-4.4-complete.jar - downloaded from the [ANTLR][antlr] Web site. There may be a later version.
 
 
 ### Windows
