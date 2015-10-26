@@ -22,4 +22,4 @@
 # ----------------------------------------------------------------------
 
 
-@java -cp "./tnsnames_checker.jar:./antlr-4.4-complete.jar"  tnsnames_checker %*
+java -cp "../tnsnames_checker.jar:${CLASSPATH}"  tnsnames_checker $*

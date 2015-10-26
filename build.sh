@@ -1,9 +1,12 @@
-echo " "
-echo "Setting build environment ..."
-. ./antlr_shell.sh
+# Assumes that the antlr_shell.sh script has been sourced prior
+# to calling this build file:
+#
+# . ./antlr_shell.sh
+#
 
+echo " "
 echo "Compiling grammar ..."
-antlr4 tnsnames.g4
+java org.antlr.v4.Tool tnsnames.g4
 
 echo "Compiling java ..."
 javac *.java

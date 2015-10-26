@@ -34,9 +34,9 @@ The checks carried out are:
 
 ### Linux/Unix Only Files
 
-  - build.sh - Carries out a full compile and build from the grammar onwards. Creates a jar file in the test direcory.
-  - antlr_shell.sh - You need to "source" this file to set up the ANTLR4 environment *before* attempting to build anything. Edit this to set your own JAVA_HOME before use. See build.sh.
-  - test/tnsnames_checker.sh - a script to run the generated checker application.
+  - antlr_shell.sh - You need to "source" this file to set up the ANTLR4 environment *before* attempting to build anything. Edit this to set your own JAVA_HOME and CLASSPATH before use. 
+  - build.sh - Carries out a full compile and build from the grammar onwards. Creates a jar file in the current (source) direcory.
+  - test/tnsnames_checker.sh - a script to run the generated checker application. Uses the CLASSPATH set in antlr_shell.sh and the newly built tnsnames_checker.jar file.
 
 ### Something for Everyone!
 
@@ -61,9 +61,10 @@ The checks carried out are:
   - Execute the build program. A tnsnames_checker.jar file will be created in the test folder.
   - Test - see below.
 
-### Linus and Unix.
+### Linux and Unix.
   - Open a shell session.
   - cd to wherever the source lives.
+  - . ./antlr_shell.sh to set the aliases and the environment for ANTLR4.
   - ./build.sh to perform a full build. A tnsnames_checker.jar will be created in the test directory.
   - Test. See below.
 
@@ -76,7 +77,9 @@ From the build directory:
   - On Linux and Unix, execute the tnsnames_checker.sh script passing parameters as described below.
 
 ### Parameters
-Output from the checker is passed to both stdout and stderr. General messages and flagrant *blowing my own trumpet* messages go to stdout, while warnings and errors go to stderr. You can either ignore this and catch everything on screen, in a file, or redirect the individual channels to different files, as follows:
+Output from the checker is passed to both stdout and stderr. General messages and flagrant *blowing my own trumpet* messages go to stdout, while warnings and errors go to stderr. You can either ignore this and catch everything on screen, in a file, or redirect the individual channels to different files, as per the examples below.
+
+**Note**: if you wish to use a pretty mangled tnsnames file for testing, there's one in the source directory named tnsnames.test.ora. Simply replace "tnsnames.ora" in the examples below with "../tnsnames.test.ora" if, as expected, you are running the test from the test directory.
 
 #### Everything to the Screen
 

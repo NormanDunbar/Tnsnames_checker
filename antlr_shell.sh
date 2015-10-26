@@ -1,8 +1,16 @@
 # Change this to suit your system:
-export JAVA_HOME='/opt/java6'
+if [ -z "${JAVA_HOME}" ]
+then
+	export JAVA_HOME='/opt/java6'
+fi
 
-# You need to set this to the location of the ANTLR4 jar file.
-export CLASSPATH="./antlr-4.4-complete.jar"
+# You need to set this to the location of your ANTLR4 jar file.
+export CLASSPATH="/home/norman/bin/antlr-4.4-complete.jar"
+if [ ! -f "${CLASSPATH}" ]
+then
+	echo "Cannot locate file \""${CLASSPATH}"\""
+	exit 1
+fi
 
 # Alias to compile an ANTLR4 grammar.
 alias antlr4='java org.antlr.v4.Tool'
