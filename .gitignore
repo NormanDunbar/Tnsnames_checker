@@ -1,4 +1,5 @@
 *.tokens
+*.class
 tnsnamesLexer.java
 tnsnamesParser.java
 tnsnamesBaseListener.java
