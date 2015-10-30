@@ -5,12 +5,13 @@ then
 fi
 
 # You need to set this to the location of your ANTLR4 jar file.
-export CLASSPATH="/home/norman/bin/antlr-4.4-complete.jar"
-if [ ! -f "${CLASSPATH}" ]
+ANTLR4="/home/norman/bin/antlr-4.4-complete.jar"
+if [ ! -f "${ANTLR4}" ]
 then
-	echo "Cannot locate file \""${CLASSPATH}"\""
+	echo "Cannot locate file \""${ANTLR4}"\""
 	exit 1
 fi
+export CLASSPATH=".:${CLASSPATH}:${ANTLR4}"
 
 # Alias to compile an ANTLR4 grammar.
 alias antlr4='java org.antlr.v4.Tool'

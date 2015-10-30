@@ -1,3 +1,8 @@
+*.iml
+out/*
+*.swp
+idea/*
+
 *.tokens
 *.class
 tnsnamesLexer.java

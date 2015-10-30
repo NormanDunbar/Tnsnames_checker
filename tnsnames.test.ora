@@ -91,9 +91,12 @@ lsnr_betty =
 
 
 #--------------------------------------------------------------------
-# There's not much can go wrong here!
+# There's not much can go wrong here! Except when I discovered that
+# Oracle allows unquoted strings too!
 #--------------------------------------------------------------------
-IFILE = "/this/is/an/ifile/entry/tnsnames.ora"  
+IFILE = "/this/is/a/double_quoted/ifile/entry/tnsnames.ora"
+# IFILE = '/this/is/a/single_quoted/ifile/entry/tnsnames.ora'
+# IFILE = /this/is/an/unquoted/ifile/entry/tnsnames.ora
 
 
 #--------------------------------------------------------------------
