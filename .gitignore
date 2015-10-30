@@ -1,7 +1,7 @@
 *.iml
 out/*
 *.swp
-idea/*
+.idea/*
 
 *.tokens
 *.class
