@@ -58,14 +58,14 @@ The checks carried out are:
   - Open a cmd window.
   - cd to wherever the source is to be found.
   - Execute the antlr_shell program.
-  - Execute the build program. A tnsnames_checker.jar file will be created in the test folder.
+  - Execute the build program. A tnsnames_checker.jar file will be created in the "test" folder.
   - Test - see below.
 
 ### Linux and Unix.
   - Open a shell session.
   - cd to wherever the source lives.
   - . ./antlr_shell.sh to set the aliases and the environment for ANTLR4.
-  - ./build.sh to perform a full build. A tnsnames_checker.jar will be created in the test directory.
+  - ./build.sh to perform a full build. A tnsnames_checker.jar will be created in the current directory.
   - Test. See below.
 
 ## Testing
@@ -73,7 +73,7 @@ The checks carried out are:
 From the build directory:
 
   - cd test
-  - On Windows, execute the tnsnames_checker.cmd passing parameters as described below.
+  - On Windows, execute the tnsnames_checker.cmd passing parameters as described below. You might need to amend this file to correct the path to the ANTLR4 jar file(s).
   - On Linux and Unix, execute the tnsnames_checker.sh script passing parameters as described below.
 
 ### Parameters

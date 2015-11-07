@@ -2,74 +2,74 @@
 <p>Validate and syntax check your tnsnames.ora file with tnsnames_checker. This utility will perform the following checks on your tnsnames.ora file and report anything it doesn't like.</p>
 <p>The checks carried out are:</p>
 <ul>
-<li>Missing or invalid characters;<br /></li>
-<li>Syntax errors;<br /></li>
-<li>Semantic errors;<br /></li>
-<li>Redefinition of parameters;<br /></li>
-<li>IPv4 host address validation;<br /></li>
-<li>Port number validation;<br /></li>
-<li>Duplicate entries;<br /></li>
-<li>IFILE;<br /></li>
-<li>Listener only entries;<br /></li>
-<li>SDU parameter in range;<br /></li>
-<li>Missing DESCRIPTION_LISTs;<br /></li>
+<li>Missing or invalid characters;</li>
+<li>Syntax errors;</li>
+<li>Semantic errors;</li>
+<li>Redefinition of parameters;</li>
+<li>IPv4 host address validation;</li>
+<li>Port number validation;</li>
+<li>Duplicate entries;</li>
+<li>IFILE;</li>
+<li>Listener only entries;</li>
+<li>SDU parameter in range;</li>
+<li>Missing DESCRIPTION_LISTs;</li>
 <li>Missing ADDRESS_LISTs;</li>
 </ul>
 <h2 id="file-list">File List</h2>
 <ul>
-<li>LICENSE - The MIT License file. Basically, you do what you like!<br /></li>
-<li>README.md - This file in Markdown format.<br /></li>
+<li>LICENSE - The MIT License file. Basically, you do what you like!</li>
+<li>README.md - This file in Markdown format.</li>
 <li>README.html - This file, in HTML format.</li>
 </ul>
 <h3 id="windows-only-files">Windows Only Files</h3>
 <ul>
-<li>antlr4.bat - A batch file to compile a *.g4 file into various Java classes, lexers and parsers.<br /></li>
-<li>grun.bat - A file to test run parser rules. Read the ANTLR4 docs for details on the <a href="http://www.antlr.org">ANTLR</a> website. You might need to use this in debugging your grammar.<br /></li>
-<li>build.bat - A batch file to compile the grammar, compile the Java files, build a jarfile (in the test subdirectory) and clean up after itself.<br /></li>
-<li>antlr_shell.cmd - A batch file to set the Java and ALTLR4 environment. Run this first, before you try to do anything. You will need to edit the various folder names to match your system before doing anything though!<br /></li>
-<li>test\tnsnames_checker.cmd - a batch file to run the generated checker application.</li>
+<li>antlr4.bat - A batch file to compile a *.g4 file into various Java classes, lexers and parsers.</li>
+<li>grun.bat - A file to test run parser rules. Read the ANTLR4 docs for details on the <a href="http://www.antlr.org">ANTLR</a> website. You might need to use this in debugging your grammar.</li>
+<li>build.bat - A batch file to compile the grammar, compile the Java files, build a jarfile (in the test subdirectory) and clean up after itself.</li>
+<li>antlr_shell.cmd - A batch file to set the Java and ALTLR4 environment. Run this first, before you try to do anything. You will need to edit the various folder names to match your system before doing anything though!</li>
+<li>test_checker.cmd - a batch file to run the generated checker application.</li>
 </ul>
 <h3 id="linuxunix-only-files">Linux/Unix Only Files</h3>
 <ul>
-<li>antlr_shell.sh - You need to &quot;source&quot; this file to set up the ANTLR4 environment <em>before</em> attempting to build anything. Edit this to set your own JAVA_HOME and CLASSPATH before use.<br /></li>
-<li>build.sh - Carries out a full compile and build from the grammar onwards. Creates a jar file in the current (source) direcory.<br /></li>
+<li>antlr_shell.sh - You need to &quot;source&quot; this file to set up the ANTLR4 environment <em>before</em> attempting to build anything. Edit this to set your own JAVA_HOME and CLASSPATH before use.</li>
+<li>build.sh - Carries out a full compile and build from the grammar onwards. Creates a jar file in the current (source) direcory.</li>
 <li>test/tnsnames_checker.sh - a script to run the generated checker application. Uses the CLASSPATH set in antlr_shell.sh and the newly built tnsnames_checker.jar file.</li>
 </ul>
 <h3 id="something-for-everyone">Something for Everyone!</h3>
 <ul>
-<li>tnsnames.g4 - this is the ANTLR4 grammar that defines the structure and semantics of a tnsnames.ora file as per the Oracle docs for 11gR2. However, it may be valid for previous, and subsequent versions too.<br /></li>
-<li>LineNumber.java - A Java class to get around a <em>serious bug</em> in Java. You cannot swap two integers, in a function or class method, unless you wrap them in a class with a getter and setter. Sigh! (Don't argue with me, it's a bug, right!!!)<br /></li>
-<li>tnsnames_checker.java - This is the small, but almost perfectly formed Java class that kicks off and controls everything when the final build is complete.<br /></li>
-<li>tnsnamesInterfaceListener.java - This class extends one of the Java classes created by the ANTLR4 build process and carries out all the checks listed above on the parse tree created by parsing your tnsnames.ora file.<br /></li>
+<li>tnsnames.g4 - this is the ANTLR4 grammar that defines the structure and semantics of a tnsnames.ora file as per the Oracle docs for 11gR2. However, it may be valid for previous, and subsequent versions too.</li>
+<li>LineNumber.java - A Java class to get around a <em>serious bug</em> in Java. You cannot swap two integers, in a function or class method, unless you wrap them in a class with a getter and setter. Sigh! (Don't argue with me, it's a bug, right!!!)</li>
+<li>tnsnames_checker.java - This is the small, but almost perfectly formed Java class that kicks off and controls everything when the final build is complete.</li>
+<li>tnsnamesInterfaceListener.java - This class extends one of the Java classes created by the ANTLR4 build process and carries out all the checks listed above on the parse tree created by parsing your tnsnames.ora file.</li>
 <li>tnsnames.test.ora - Probably the world's worst tnsnames.ora file. Use it to test your version when you have compiled and built it. It is full of errors that should exercise all code paths through the parser and checker.</li>
 </ul>
 <h2 id="the-build">The Build</h2>
 <h3 id="dependencies">Dependencies</h3>
 <ul>
-<li>Java 1.6 (aka Java 6) minimum. Has been built and tested with Java 6 and Java 7.<br /></li>
+<li>Java 1.6 (aka Java 6) minimum. Has been built and tested with Java 6 and Java 7.</li>
 <li>antlr-4.4-complete.jar - downloaded from the <a href="http://www.antlr.org">ANTLR</a> Web site. There may be a later version.</li>
 </ul>
 <h3 id="windows">Windows</h3>
 <ul>
-<li>Open a cmd window.<br /></li>
-<li>cd to wherever the source is to be found.<br /></li>
-<li>Execute the antlr_shell program.<br /></li>
-<li>Execute the build program. A tnsnames_checker.jar file will be created in the test folder.<br /></li>
+<li>Open a cmd window.</li>
+<li>cd to wherever the source is to be found.</li>
+<li>Execute the antlr_shell program.</li>
+<li>Execute the build program. A tnsnames_checker.jar file will be created in the &quot;test&quot; folder.</li>
 <li>Test - see below.</li>
 </ul>
 <h3 id="linux-and-unix.">Linux and Unix.</h3>
 <ul>
-<li>Open a shell session.<br /></li>
-<li>cd to wherever the source lives.<br /></li>
-<li>. ./antlr_shell.sh to set the aliases and the environment for ANTLR4.<br /></li>
-<li>./build.sh to perform a full build. A tnsnames_checker.jar will be created in the test directory.<br /></li>
+<li>Open a shell session.</li>
+<li>cd to wherever the source lives.</li>
+<li>. ./antlr_shell.sh to set the aliases and the environment for ANTLR4.</li>
+<li>./build.sh to perform a full build. A tnsnames_checker.jar will be created in the current directory.</li>
 <li>Test. See below.</li>
 </ul>
 <h2 id="testing">Testing</h2>
 <p>From the build directory:</p>
 <ul>
-<li>cd test<br /></li>
-<li>On Windows, execute the tnsnames_checker.cmd passing parameters as described below.<br /></li>
+<li>cd test</li>
+<li>On Windows, execute the tnsnames_checker.cmd passing parameters as described below. You might need to amend this file to correct the path to the ANTLR4 jar file(s).</li>
 <li>On Linux and Unix, execute the tnsnames_checker.sh script passing parameters as described below.</li>
 </ul>
 <h3 id="parameters">Parameters</h3>
