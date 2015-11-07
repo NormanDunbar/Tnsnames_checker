@@ -1,5 +1,6 @@
 *.iml
 out/*
+test/*.log
 *.swp
 .idea/*
 

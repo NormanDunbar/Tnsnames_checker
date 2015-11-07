@@ -6,7 +6,8 @@
 
 echo " "
 echo "Compiling grammar ..."
-java org.antlr.v4.Tool tnsnames.g4
+java org.antlr.v4.Tool tnsnamesLexer.g4
+java org.antlr.v4.Tool tnsnamesParser.g4
 
 echo "Compiling java ..."
 javac *.java
