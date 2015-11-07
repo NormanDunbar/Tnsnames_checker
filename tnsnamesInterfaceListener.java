@@ -37,7 +37,7 @@ import org.antlr.v4.runtime.misc.Interval;
 import java.io.File;
 import java.util.*;
 
-public class tnsnamesInterfaceListener extends tnsnamesBaseListener 
+public class tnsnamesInterfaceListener extends tnsnamesParserBaseListener
 {
     tnsnamesParser parser;                  // The Parser we are listening for.
     String[] ruleNames;                     // The parser's list of rule names.
@@ -1251,7 +1251,7 @@ public class tnsnamesInterfaceListener extends tnsnamesBaseListener
    //---------------------------------------------------------------- 
     // TNSNAMES EXIT
     //---------------------------------------------------------------- 
-    // On exit from the complete tnsnames file, list the included
+    // On exit from the complete tnsnames file, list the run stats and
     // IFILE filenames for further processing. They are not checked by
     // this script automatically (yet!) so need to be done manually.
     //---------------------------------------------------------------- 
@@ -1273,33 +1273,57 @@ public class tnsnamesInterfaceListener extends tnsnamesBaseListener
         System.out.println(String.format("%-80s", "=").replace(" ", "="));
 
         // Did we find any IFILE entries? If so, list the files for further analysis.
-        if (ctx.ifile() != null /* && ctx.ifile().size() == 0 */) 
+        if (ctx.ifile() != null)
         {
+            int ifileSize = ctx.ifile().size();
+
             System.out.println("\n" + String.format("%-80s", "-").replace(" ", "-"));
             System.out.println("IFILE List:");
             System.out.println(String.format("%-80s", "-").replace(" ", "-"));
 
-            System.out.println("Please run the tnsnames_checker script on the following files:");
+            System.out.println("Please run the tnsnames_checker script on the following " + ifileSize + " files:");
 
-            for (int thisIfile = 0; thisIfile < ctx.ifile().size(); thisIfile++)
+            for (int thisIfile = 0; thisIfile < ifileSize; thisIfile++)
             {
-                // Print the filename first...without leading and trailing double quotes.
-                String ifileFilename = ctx.ifile(thisIfile).DQ_STRING().getText().replace("\"", "").trim();
-                System.out.print("\t" + ifileFilename);
+                // Grab the filename including leading and/or trailing (optional) quotes.
+                // Plus, whatever crud is between the filename and end of line, if unquoted.
+                String ifileFilename = ctx.ifile(thisIfile).I_STRING().getText();
+
+                // This could be double quoted, single quoted or no quotes, so strip off
+                // as necessary.
+                // Double quotes first:
+                if (ifileFilename.startsWith("\""))
+                {
+                    ifileFilename = ifileFilename.replace("\"", "");
+                }
+
+                // Single quotes next:
+                // Yes, I could have used an "else", I know. ;-)
+                if (ifileFilename.startsWith("'"))
+                {
+                    ifileFilename = ifileFilename.replace("'", "");
+                }
+
+                // If unquoted, we'll have possible leading spaces, plus optional
+                // spaces and/or a trailing '\r' & '\n' - get rid.
+                // Also cleans any crud from the quoted strings too.
+                ifileFilename = ifileFilename.trim();
+
+                System.out.print("\t" + "IFILE[" + thisIfile + "] = '" + ifileFilename + "'");
                 
                 // Then attempt to determine if it exists. Not necessarily an error if not.
-                // It fails to find the file if we leave the double quotes present.
+                // It fails to find the file if we leave the (optional) quotes present.
                 File inputFile = new File(ifileFilename);
                 if (inputFile.isFile()) 
                 {
                     // The file exists on this server/laptop/whatever!
-                    System.out.println(" (file exists on this computer.)");
+                    System.out.println(" (on this computer.)");
                 }
                 else
                 {
                     // The file doesn't exist here. We could be running a check
                     // for another server/laptop/etc so it's not a fatal problem.
-                    System.out.println(" (file not found on this computer.)");
+                    System.out.println(" (not found on this computer.)");
                 }
             }
 

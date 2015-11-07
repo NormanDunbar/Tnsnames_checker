@@ -95,8 +95,8 @@ lsnr_betty =
 # Oracle allows unquoted strings too!
 #--------------------------------------------------------------------
 IFILE = "/this/is/a/double_quoted/ifile/entry/tnsnames.ora"
-# IFILE = '/this/is/a/single_quoted/ifile/entry/tnsnames.ora'
-# IFILE = /this/is/an/unquoted/ifile/entry/tnsnames.ora
+IFILE = '/this/is/a/single_quoted/ifile/entry/tnsnames.ora'
+IFILE = /this/is/an/unquoted/ifile/entry/tnsnames.ora
 
 
 #--------------------------------------------------------------------
@@ -265,7 +265,7 @@ pebbles_two =
         (address = (protocol = tcp)(host = srvr_barney.world.co.uk)(port = 1522))
         (connect_data =
           (failover_mode =
-                (backup = bedrock)
+                (backup = bedrock.server.name.protocol.co.uk)
                 (type = session)
                 (method = basic)
                 (retries = 10)
