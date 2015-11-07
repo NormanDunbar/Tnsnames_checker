@@ -95,8 +95,8 @@ lsnr_betty =
 # Oracle allows unquoted strings too!
 #--------------------------------------------------------------------
 IFILE = "/this/is/a/double_quoted/ifile/entry/tnsnames.ora"
-# IFILE = '/this/is/a/single_quoted/ifile/entry/tnsnames.ora'
-# IFILE = /this/is/an/unquoted/ifile/entry/tnsnames.ora
+#IFILE = '/this/is/a/single_quoted/ifile/entry/tnsnames.ora'
+#IFILE = /this/is/an/unquoted/ifile/entry/tnsnames.ora
 
 
 #--------------------------------------------------------------------
@@ -275,7 +275,7 @@ pebbles_two =
           (service_name = shared_server)
           (failover_mode =           # Redefinition
                 (method = preconnect)
-                (backup = bedrock)
+                (backup = bedrock.protocol.service.name.host.co.uk)
                 (delay = 22)
                 (type = session)
                 (type = select)      # Redefinition 
@@ -291,6 +291,21 @@ pebbles_two =
 
 
 #--------------------------------------------------------------------
+# Issue 232.
+#--------------------------------------------------------------------
+# Test entry for https://github.com/antlr/grammars-v4/issues/232.
+# Use of reserved words in service and host names caused errors.
+#--------------------------------------------------------------------
+alias.foo.bar =
+    (description =
+        (address_list =
+            (address = (protocol = tcp)(host = somehost.host.foo.bar) (port = 1521))
+        )
+        (connect_data = (service_name = someservice.service.foo.bar))
+    )
+
+#--------------------------------------------------------------------
 # The following line will cause a lexer error, it's incomplete.
 #--------------------------------------------------------------------
 rmancatalog = ()
+
