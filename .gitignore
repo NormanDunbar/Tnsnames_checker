@@ -1,14 +1,24 @@
-*.iml
-out/*
+# Test folder stuff we don't need.
 test/*.log
-*.swp
-.idea/*
+test/*.jar
 
+# ANTLR4 (4.7.1 onwards) stuff we don't want.
+*.interp
 *.tokens
 *.class
-tnsnamesLexer.java
-tnsnamesParser.java
-tnsnamesBaseListener.java
-tnsnamesListener.java
+
+# Don't include my parser after compilation.
 tnsnames_checker.jar
+
+
+# Ignore every tnsnamesLexer*.* file EXCEPT tnsnamesLexer.g4.
+tnsnamesLexer*.*
+!tnsnamesLexer.g4
+
+# Ignore every tnsnamesParser*.* file EXCEPT tnsnamesParser.g4.
+tnsnamesParser*.*
+!tnsnamesParser.g4
+
+tnsnamesParserBaseListener.java
+tnsnamesParserListener.java
 
