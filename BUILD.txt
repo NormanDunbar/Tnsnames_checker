@@ -1,0 +1,58 @@
+How To Build Tnsnames_checker.jar
+=================================
+
+These instructions cause the files to be built within the source directory.
+
+Some people frown upon this mode of building, so if you are one of those, then please ignore
+this document and start again with BUILD_OUT_OF_SOURCE.txt. (Bye!)
+
+Still here? Read on.
+
+
+Prerequisites
+-------------
+
+*   You must have the Java Development Kit installed and on your path. Try running  'javac -version' to check.
+*   You must have the latest (currently 4.7.1) version of 'antlr-4.x.x-complete.jar' on your CLASSPATH.
+
+
+How To Build
+------------
+
+For Windows:
+
+set antlr4="java org.antlr.v4.Tool"
+
+
+cd /D <sourcecode location>\Tnsnames_checker
+%antlr4% tnsnamesLexer.g4
+%antlr4% tnsnamesParser.g4
+javac *.java
+jar -cvf tnsnames_checker.jar *.class >nul
+del *.class
+
+
+tnsnames_checker.jar is now ready  for use. 
+
+java -cp ".\tnsnames_checker.jar:%CLASSPATH%"  tnsnames_checker  tnsnames.ora  >logfile.name 2>&1
+
+
+
+For Linux:
+
+
+alias antlr4="java org.antlr.v4.Tool"
+
+
+cd <sourcecode location>/Tnsnames_checker
+antlr4 tnsnamesLexer.g4
+antlr4 tnsnamesParser.g4
+javac *.java
+jar -cvf tnsnames_checker.jar *.class >/dev/null
+rm *.class
+
+
+tnsnames_checker.jar is now ready  for use. 
+
+java -cp "./tnsnames_checker.jar:${CLASSPATH}"  tnsnames_checker  tnsnames.ora  >logfile.name 2>&1
+

@@ -2,6 +2,9 @@
 test/*.log
 test/*.jar
 
+#Out of source build stuff we don't want.
+build/*
+
 # ANTLR4 (4.7.1 onwards) stuff we don't want.
 *.interp
 *.tokens
