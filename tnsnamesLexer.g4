@@ -371,7 +371,6 @@ mode IFILE_MODE ;
 I_EQUAL         : '=' ;
 I_STRING        : (DQ_STRING | ISQ_STRING | IUQ_STRING) -> popMode ;
 ISQ_STRING      : S_QUOTE (~'\'')* S_QUOTE ;
-//IUQ_STRING      :  ~['"''\'''=''\n''\r']*? NL ;
 IUQ_STRING      :  (~["'=])*? NL ;
 I_WS            : [ \t\r\n]+ -> skip  ;
 I_COMMENT       : '#' (.)*? NL  -> skip  ;
