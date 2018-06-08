@@ -14,7 +14,7 @@ public class tnsnames_checker
     {
 
         // A bit of "sign on and blow my own trumpet stuff" ;-)
-        String thisVersion = "0.3";   // Version of this utility.
+        String thisVersion = "0.5";   // Version of this utility.
         String tnsVersion = "11gR2";   // Version of tnsnames specification used.
  
         
@@ -56,7 +56,9 @@ public class tnsnames_checker
         }
              
 
-        ANTLRInputStream input = new ANTLRInputStream(iStream);
+        //ANTLRInputStream input = new ANTLRInputStream(iStream);
+        
+        CharStream input = CharStreams.fromStream(iStream);
 
         // The lexer reads from the input CharStream
         tnsnamesLexer lexer = new tnsnamesLexer(input);
