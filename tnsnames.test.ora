@@ -304,8 +304,82 @@ alias.foo.bar =
         (connect_data = (service_name = someservice.service.foo.bar))
     )
 
+
 #--------------------------------------------------------------------
-# The following line will cause a lexer error, it's incomplete.
+# Added the remainder of the file to test the 12c additions.
 #--------------------------------------------------------------------
-rmancatalog = ()
+valid_12c =
+    (description =
+        (compression=on)
+        (compression_levels=(level=low)(level=high))
+        (address = (protocol = tcp)(host = srvr_barney.world.co.uk)(port = 1522))
+        (connect_data =
+          (security=
+            (ssl_server_cert_dn="cn=sales,cn=OracleContext,dc=us,dc=acme,dc=com")
+          )
+          ((sharding_key=1234567)(SUPER_SHARDING_KEY=gold))
+          (failover_mode =
+                (backup = bedrock.server.name.protocol.co.uk)
+                (type = session)
+                (method = basic)
+                (retries = 10)
+                (delay = 20)
+          )
+          (server = shared)
+          (service_name = shared_server)
+        )
+    )
+
+valid_tcps =
+    (description =
+        (compression=on)
+        (compression_levels=(level=low)(level=high))
+        (address = 
+           (protocol = tcps)
+           (host = srvr_barney.world.co.uk)
+           (port = 1522)
+           (HTTPS_PROXY=www-proxy.mycompany.com)
+           (HTTPS_PROXY_PORT=1234)
+        )
+        (connect_data =
+          (security=
+            (ssl_server_cert_dn="cn=sales,cn=OracleContext,dc=us,dc=acme,dc=com")
+          )
+          ((sharding_key=1234567)(SUPER_SHARDING_KEY=gold))
+          (failover_mode =
+                (backup = bedrock.server.name.protocol.co.uk)
+                (type = session)
+                (method = basic)
+                (retries = 10)
+                (delay = 20)
+          )
+          (server = shared)
+          (service_name = shared_server)
+        )
+    )
+
+#--------------------------------------------------------------------
+# Added the remainder of the file to test the 12c additions.
+#--------------------------------------------------------------------
+valid_exadirect =
+    (description =
+        (compression=on)
+        (compression_levels=(level=low)(level=high))
+        (address = (protocol = exadirect)(host = srvr_barney.world.co.uk)(port = 1522))
+        (connect_data =
+          (security=
+            (ssl_server_cert_dn="cn=sales,cn=OracleContext,dc=us,dc=acme,dc=com")
+          )
+          ((sharding_key=1234567)(SUPER_SHARDING_KEY=gold))
+          (failover_mode =
+                (backup = bedrock.server.name.protocol.co.uk)
+                (type = session)
+                (method = basic)
+                (retries = 10)
+                (delay = 20)
+          )
+          (server = shared)
+          (service_name = shared_server)
+        )
+    )
 

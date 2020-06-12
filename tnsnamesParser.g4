@@ -76,6 +76,8 @@ d_parameter      : d_enable
                  | d_conn_timeout
                  | d_retry_count
                  | d_tct
+                 | d_retry_delay                          // Added for 12c
+                 | d_compression (d_compression_levels)?   // Added for 12c
                  ;
 
 d_enable         : L_PAREN ENABLE EQUAL BROKEN R_PAREN ;
@@ -88,15 +90,26 @@ d_send_buf       : L_PAREN SEND_BUF EQUAL INT R_PAREN ;
 
 d_service_type   : L_PAREN SERVICE_TYPE EQUAL ID R_PAREN ;
 
-d_security       : L_PAREN SECURITY EQUAL ds_parameter R_PAREN ;
-
 d_conn_timeout   : L_PAREN CONN_TIMEOUT EQUAL INT R_PAREN ;
 
 d_retry_count    : L_PAREN RETRY_COUNT EQUAL INT R_PAREN ;
 
 d_tct            : L_PAREN TCT EQUAL INT R_PAREN ;
 
-ds_parameter     : L_PAREN SSL_CERT EQUAL DQ_STRING R_PAREN ;
+ds_parameter     : L_PAREN SSL_SERVER_CERT_DN EQUAL DQ_STRING R_PAREN ;
+
+// Added for 12c.
+
+d_retry_delay   : L_PAREN RETRY_DELAY EQUAL INT R_PAREN ;
+
+d_compression   : L_PAREN COMPRESSION EQUAL ON_OFF R_PAREN ;
+
+d_compression_levels : L_PAREN COMPRESSION_LEVELS EQUAL (d_comp_level)* R_PAREN ;
+
+d_comp_level    : L_PAREN LEVEL EQUAL LOW_HIGH R_PAREN ;
+
+d_security       : L_PAREN SECURITY EQUAL ds_parameter R_PAREN ;
+
 
 //-----------------------------------------------------------------
 // Stuff related to address lists. These seem to be optional in
@@ -140,6 +153,8 @@ protocol_info    : tcp_protocol       // More to come here.... BEQ, NMP, SPX ...
                  | spx_protocol
                  | nmp_protocol
                  | beq_protocol
+                 | tcps_protocol      // Added for 12c
+                 | exa_protocol       // Added for 12c
                  ;                    // See http://www.toadworld.com/platforms/oracle/w/wiki/5484.defining-tnsname-addresses.aspx
                                       // for examples etc.
 
@@ -262,6 +277,45 @@ bad_address      : L_PAREN ADDRESS EQUAL beq_beq R_PAREN ;
 
 
 //-----------------------------------------------------------------
+// TCPS Protocol rules.
+// (PROTOCOL = TCPS)(HOST = hostname)(PORT = portnumber)
+//-----------------------------------------------------------------
+tcps_protocol    : tcps_params ;
+
+tcps_params      : tcps_parameter+ ;
+
+tcps_parameter   : tcp_host
+                 | tcp_port
+                 | tcps_tcps
+                 | tcps_proxy_params
+                 ;
+
+tcps_tcps        : L_PAREN PROTOCOL EQUAL TCPS R_PAREN ;
+
+tcps_proxy_params : tcps_https_proxy tcps_proxy_port ;
+
+tcps_https_proxy : L_PAREN HTTPS_PROXY EQUAL host  R_PAREN ;
+
+tcps_proxy_port : L_PAREN HTTPS_PROXY_PORT EQUAL port  R_PAREN ;
+
+
+//-----------------------------------------------------------------
+// EXA Protocol rules.
+// (PROTOCOL = EXADIRECT)(HOST = hostname)(PORT = portnumber)
+//-----------------------------------------------------------------
+exa_protocol     : exa_params ;
+
+exa_params       : exa_parameter+ ;
+
+exa_parameter    : tcp_host
+                 | tcp_port
+                 | exa_exa
+                 ;
+
+exa_exa          : L_PAREN PROTOCOL EQUAL EXADIRECT R_PAREN ;
+
+
+//-----------------------------------------------------------------
 // Connect data rules.
 //-----------------------------------------------------------------
 connect_data     : L_PAREN CONNECT_DATA EQUAL cd_params R_PAREN ;
@@ -278,6 +332,8 @@ cd_parameter     : cd_service_name
                  | cd_rdb_database
                  | cd_server
                  | cd_ur
+                 | cd_sharding          // Added for 12c
+                 | cd_security          // Added for 12c
                  ;
 
 cd_service_name  : L_PAREN SERVICE_NAME EQUAL ID (DOT ID)* R_PAREN ;
@@ -304,6 +360,25 @@ cd_rdb_database  : L_PAREN RDB_DATABASE EQUAL (L_SQUARE DOT ID R_SQUARE)? ID (DO
 cd_server        : L_PAREN SERVER EQUAL (DEDICATED | SHARED | POOLED) R_PAREN ;
 
 cd_ur            : L_PAREN UR EQUAL UR_A R_PAREN ;
+
+// Yes, there are TWO opening and closing brackets in the sharding stuff.
+// ((SHARDING_KEY=12345678))
+// ((SHARDING_KEY=12345678)(SUPER_SHARDING_KEY=gold))
+cd_sharding      : L_PAREN cd_sharding_key (cd_super_sharding_key)? R_PAREN ;
+
+cd_sharding_key  : L_PAREN SHARDING_KEY EQUAL INT R_PAREN ;
+
+// The super_sharding_key entry looks, from the docs, to be just an ID
+// so that's what I'm doing. It might be able to be "dotted" in which 
+// case, someone will complain and I'll fix it.            ND 2020/05/20
+cd_super_sharding_key  : L_PAREN SUPER_SHARDING_KEY EQUAL ID R_PAREN ;
+
+cd_security     : L_PAREN SECURITY EQUAL cd_ssl_server_cert_dn R_PAREN ;
+
+// Something like "cn=sales,cn=something,dc=gb,dc=whatever,dc=com" (yuk!)
+// Not much I can do there, it's a double quoted string for now! ND 2020/05/20
+cd_ssl_server_cert_dn : L_PAREN SSL_SERVER_CERT_DN EQUAL DQ_STRING R_PAREN ;
+
 
 fo_params        : fo_parameter+ ;
 

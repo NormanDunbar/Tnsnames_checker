@@ -1,11 +1,18 @@
 // -------------------------------------------------------------------
 // Definition of a grammar to parse a tnsnames.ora file.
 // Specification as per Oracle 11g Release 2 Network Reference manual
-// http://docs.oracle.com/cd/E11882_01/network.112/e10835/tnsnames.htm
+// https://docs.oracle.com/cd/E11882_01/network.112/e10835/tnsnames.htm
+//
+// Updated 20th May 2020 to add in some new 12.2 stuff. The docs used are
+// https://docs.oracle.com/en/database/oracle/oracle-database/12.2/netrf/local-naming-parameters-in-tnsnames-ora-file.html
+//
+// There's a bug in the docs. The SECURITY parameter is for CONNECT_DATA
+// not for DESCRIPTION.
 // -------------------------------------------------------------------
 // Norman Dunbar.
 // Email: norman@dunbar-it.co.uk
 // August 2014.
+// May 2020.
 // -------------------------------------------------------------------
 // Warning: I'm not a compiler writer, nor do I play one on TV.
 // Warning: This is my first "proper" ANTLR grammar.
@@ -168,15 +175,13 @@ ARGV0            : A R G V '0' ;
 
 ARGS             : A R G S ;
                  
-SECURITY         : S E C U R I T Y ;
-                 
-SSL_CERT         : S S L '_' SERVER '_' C E R T '_' D N ;
-                 
 CONN_TIMEOUT     : C O N N E C T '_' T I M E O U T ;
                  
 RETRY_COUNT      : R E T R Y '_' C O U N T ;
                  
 TCT              : T R A N S P O R T '_' CONN_TIMEOUT ; 
+
+
 
 //----------------------------------------------------------------------------
 // Because IFILEs accept double, single or unquoted strings, we need
@@ -213,7 +218,8 @@ HS               : H S ;
 RDB_DATABASE     : R D B '_' D A T A B A S E ;
                  
 SERVER           : S E R V E R ;
-                 
+
+
 //-------------------------------------------------
 // FAILOVER_MODE parameters.
 //-------------------------------------------------
@@ -246,6 +252,46 @@ QUAD             : '0'[xX] HEX_DIGIT+
                  | '0' OCT_DIGIT+
                  | INT 
                  ;
+
+
+//-------------------------------------------------
+// Added for 12c. By keeping them all here, I can
+// work through them in the parser. :)
+//-------------------------------------------------
+
+SHARDING_KEY     : S H A R D I N G '_' K E Y ;
+
+SUPER_SHARDING_KEY : S U P E R '_' S H A R D I N G '_' K E Y ;
+
+RETRY_DELAY      : R E T R Y '_' D E L A Y ;
+
+COMPRESSION      : C O M P R E S S I O N ;
+
+LEVEL            : L E V E L ;
+
+LEVELS           : LEVEL S;
+
+COMPRESSION_LEVELS : COMPRESSION '_' LEVELS ;
+
+LOW_HIGH         : L O W | H I G H ;
+
+// New PROTOCOLs
+TCPS             : T C P S ;
+
+EXADIRECT        : E X A D I R E C T ;
+
+// If TCPS in use, these are optional:
+HTTPS_PROXY      : H T T P S '_' P R O X Y ;
+
+HTTPS_PROXY_PORT : HTTPS_PROXY '_' PORT ;
+
+//-------------------------------------------------
+// 12c SECURITY section. (Under CONNECT_DATA)
+//-------------------------------------------------
+
+SECURITY         : S E C U R I T Y ;
+
+SSL_SERVER_CERT_DN : S S L '_' SERVER '_' C E R T '_' D N ;
 
 
 //-------------------------------------------------
@@ -354,7 +400,10 @@ fragment
 NAME             : N A M E ;
                  
 fragment
-BUF_SIZE         :B U F '_' S I Z E ;                 
+BUF_SIZE         :B U F '_' S I Z E ;           
+
+fragment
+ONLY             : O N L Y ;
 
 //----------------------------------------------------------------------------
 // Everything from here on (unless we hit another 'mode' command, is related
