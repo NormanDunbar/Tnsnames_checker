@@ -25,3 +25,4 @@ tnsnamesParser*.*
 tnsnamesParserBaseListener.java
 tnsnamesParserListener.java
 
+*.code-workspace
