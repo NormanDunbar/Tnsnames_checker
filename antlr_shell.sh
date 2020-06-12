@@ -1,11 +1,11 @@
 # Change this to suit your system:
 if [ -z "${JAVA_HOME}" ]
 then
-	export JAVA_HOME='/opt/java6'
+	export JAVA_HOME='/usr/lib/jvm/jdk-11.0.2'
 fi
 
 # You need to set this to the location of your ANTLR4 jar file.
-ANTLR4="/home/norman/bin/antlr-4.4-complete.jar"
+ANTLR4="/home/norman/SourceCode/Tnsnames_checker/ANTLR4/antlr-4.8-complete.jar"
 if [ ! -f "${ANTLR4}" ]
 then
 	echo "Cannot locate file \""${ANTLR4}"\""
