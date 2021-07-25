@@ -72,6 +72,7 @@ public class tnsnamesInterfaceListener extends tnsnamesParserBaseListener
     LineNumber firstConnTimeoutLine = new LineNumber(0);        // CONN_TIMEOUT
     LineNumber firstRetryCountLine = new LineNumber(0);         // RETRY_COUNT
     LineNumber firstTctLine = new LineNumber(0);                // TCT
+    LineNumber firstHsLine = new LineNumber(0);                 // HS.
 
     // The following are all DESCRIPTION_LIST parameters.
     LineNumber firstDL_LoadBalanceLine = new LineNumber(0);     // LOAD_BALANCE.
@@ -93,7 +94,6 @@ public class tnsnamesInterfaceListener extends tnsnamesParserBaseListener
     LineNumber firstCD_InstanceNameLine = new LineNumber(0);    // INSTANCE_NAME.
     LineNumber firstCD_FailoverModeLine = new LineNumber(0);    // FAILOVER_MODE.
     LineNumber firstCD_GlobalNameLine = new LineNumber(0);      // GLOBAL_NAME.
-    LineNumber firstCD_HsLine = new LineNumber(0);              // HS.
     LineNumber firstCD_RdbDatabaseLine = new LineNumber(0);     // RDB_DATABASE.
     LineNumber firstCD_ServerLine = new LineNumber(0);          // SERVER.
     LineNumber firstCD_UrLine = new LineNumber(0);              // UR.
@@ -370,6 +370,7 @@ public class tnsnamesInterfaceListener extends tnsnamesParserBaseListener
         firstConnTimeoutLine.setValue(0);           // CONN_TIMEOUT
         firstRetryCountLine.setValue(0);            // RETRY_COUNT
         firstTctLine.setValue(0);                   // TCT
+        firstHsLine.setValue(0);                    // Hs
 
         // Multiple ADDRESSes without an ADDRESS_LIST?
         int addressCount = ctx.address().size();
@@ -440,7 +441,6 @@ public class tnsnamesInterfaceListener extends tnsnamesParserBaseListener
         firstCD_InstanceNameLine.setValue(0);       // INSTANCE_NAME
         firstCD_FailoverModeLine.setValue(0);       // FAILOVER_MODE
         firstCD_GlobalNameLine.setValue(0);         // GLOBAL_NAME
-        firstCD_HsLine.setValue(0);                 // HS
         firstCD_RdbDatabaseLine.setValue(0);        // RDB_DATABASE
         firstCD_ServerLine.setValue(0);             // SERVER
         firstCD_UrLine.setValue(0);                 // UR
@@ -581,17 +581,6 @@ public class tnsnamesInterfaceListener extends tnsnamesParserBaseListener
     public void enterCd_global_name(tnsnamesParser.Cd_global_nameContext ctx)
     {
         checkForRedefinition("GLOBAL_NAME", firstCD_GlobalNameLine, this.lineNumber);
-    }
-
-    //---------------------------------------------------------------- 
-    // HS ENTRY
-    //---------------------------------------------------------------- 
-    // Check only for parameter redefinition.
-    //---------------------------------------------------------------- 
-    @Override
-    public void enterCd_hs(tnsnamesParser.Cd_hsContext ctx)
-    {
-        checkForRedefinition("HS", firstCD_HsLine, this.lineNumber);
     }
 
     //---------------------------------------------------------------- 
@@ -1226,6 +1215,19 @@ public class tnsnamesInterfaceListener extends tnsnamesParserBaseListener
         // If this is the first TRANSPORT_CONNECT_TIMEOUT, firstTctLine will be zero, otherwise
         // it's a redefinition.
         checkForRedefinition("TRANSPORT_CONNECT_TIMEOUT", firstTctLine, this.lineNumber);
+    }
+
+    //---------------------------------------------------------------- 
+    // HS ENTRY (on DESCRIPTION)
+    //---------------------------------------------------------------- 
+    // Check only for parameter redefinition.
+    //---------------------------------------------------------------- 
+    @Override
+    public void enterD_hs(tnsnamesParser.D_hsContext ctx)
+    {
+        // If this is the first HS, firstHsLine will be zero, otherwise
+        // it's a redefinition.
+        checkForRedefinition("HS", firstHsLine, this.lineNumber);
     }
 
     //---------------------------------------------------------------- 
