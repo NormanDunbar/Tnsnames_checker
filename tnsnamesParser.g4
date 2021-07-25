@@ -76,6 +76,7 @@ d_parameter      : d_enable
                  | d_conn_timeout
                  | d_retry_count
                  | d_tct
+                 | d_hs
                  ;
 
 d_enable         : L_PAREN ENABLE EQUAL BROKEN R_PAREN ;
@@ -95,6 +96,8 @@ d_conn_timeout   : L_PAREN CONN_TIMEOUT EQUAL INT R_PAREN ;
 d_retry_count    : L_PAREN RETRY_COUNT EQUAL INT R_PAREN ;
 
 d_tct            : L_PAREN TCT EQUAL INT R_PAREN ;
+
+d_hs             : L_PAREN HS EQUAL OK R_PAREN ;
 
 ds_parameter     : L_PAREN SSL_CERT EQUAL DQ_STRING R_PAREN ;
 
@@ -274,7 +277,6 @@ cd_parameter     : cd_service_name
                  | cd_instance_name
                  | cd_failover_mode
                  | cd_global_name
-                 | cd_hs
                  | cd_rdb_database
                  | cd_server
                  | cd_ur
@@ -290,8 +292,6 @@ cd_instance_name : L_PAREN INSTANCE_NAME EQUAL ID (DOT ID)* R_PAREN ;
 cd_failover_mode : L_PAREN FAILOVER_MODE EQUAL fo_params R_PAREN ;
 
 cd_global_name   : L_PAREN GLOBAL_NAME EQUAL ID (DOT ID)* R_PAREN ;
-
-cd_hs            : L_PAREN HS EQUAL OK R_PAREN ;
 
 // ---------------------------------------------------------------
 // This rdb_database one is a tad strange. According to the docs
